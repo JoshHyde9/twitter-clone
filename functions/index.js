@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const firebase = require("firebase");
 
 const express = require("express");
 const app = express();
@@ -9,6 +10,7 @@ require("dotenv").config();
 // Firebase config
 // https://firebase.google.com/docs/admin/setup
 const serviceAccount = require("./serviceAccount.json");
+
 // https://firebase.google.com/docs/functions/config-env
 const firebaseConfig = {
   apiKey: process.env.apiKey,
@@ -18,12 +20,17 @@ const firebaseConfig = {
   storageBucket: process.env.storageBucket,
   messagingSenderId: process.env.messagingSenderId,
   appId: process.env.appId,
-  measurementId: process.env.measurementId,
-  credential: admin.credential.cert(serviceAccount)
+  measurementId: process.env.measurementId
 };
 
+// Init DB with auth stratergy
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.databaseURL
+});
+
 // Init DB with config
-admin.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 // Get posts from Firebase DB
 app.get("/posts", (req, res) => {
