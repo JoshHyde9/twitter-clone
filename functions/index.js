@@ -32,11 +32,11 @@ admin.initializeApp({
 // Init DB with config
 firebase.initializeApp(firebaseConfig);
 
+const db = admin.firestore();
+
 // Get posts from Firebase DB
 app.get("/posts", (req, res) => {
-  admin
-    .firestore()
-    .collection("posts")
+  db.collection("posts")
     .orderBy("createdAt", "desc")
     .get()
     .then(data => {
@@ -44,7 +44,7 @@ app.get("/posts", (req, res) => {
       data.forEach(doc => {
         posts.push({
           postId: doc.id,
-          body: doc.data().body,
+          content: doc.data().content,
           userHandle: doc.data().userHandle,
           createdAt: doc.data().createdAt
         });
@@ -57,21 +57,73 @@ app.get("/posts", (req, res) => {
 // Post, post to Firebase DB
 app.post("/post", (req, res) => {
   const newPost = {
-    body: req.body.body,
+    conent: req.body.content,
     userHandle: req.body.userHandle,
-    createAt: new Date().toISOString()
+    createdAt: new Date().toISOString()
   };
 
-  admin
-    .firestore()
-    .collection("posts")
+  // Create post
+  db.collection("posts")
     .add(newPost)
     .then(doc => {
       return res.json({ message: `Document ${doc.id} created successfully` });
     })
     .catch(err => {
-      res.status(500).json({ error: `Something went wrong...` });
       console.error(err);
+      return res.status(500).json({ error: `Something went wrong...` });
+    });
+});
+
+// Signup route to create users accounts
+app.post("/signup", (req, res) => {
+  const newUser = {
+    email: req.body.email,
+    userHandle: req.body.userHandle,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword
+  };
+
+  let token, userId;
+  db.doc(`/users/${newUser.userHandle}`)
+    .get()
+    .then(doc => {
+      // If user handle already exists, send error
+      if (doc.exists) {
+        return res
+          .status(400)
+          .json({ userHandle: "User handle is already in use" });
+      } else {
+        // Create user in auth
+        return firebase
+          .auth()
+          .createUserWithEmailAndPassword(newUser.email, newUser.password);
+      }
+    })
+    .then(data => {
+      userId = data.user.uid; // Get user auth id
+      return data.user.getIdToken(); // Generate JSON web token
+    })
+    .then(idToken => {
+      token = idToken; // Set generated as JSON web token
+      const userCreds = {
+        userHandle: newUser.userHandle,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        userId
+      };
+
+      return db.doc(`/users/${newUser.userHandle}`).set(userCreds); // Create user in DB
+    })
+    .then(() => {
+      return res.status(201).json({ token }); // Return with JSON web token
+    })
+    .catch(err => {
+      console.error(err);
+      if (err.code === "auth/email-already-in-use") {
+        return res.status(400).json({ email: "Email is already in use" });
+      } else {
+        return res.status(500).json({ error: err.code });
+      }
     });
 });
 
