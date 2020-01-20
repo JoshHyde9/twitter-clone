@@ -104,7 +104,7 @@ app.post("/signup", (req, res) => {
       return data.user.getIdToken(); // Generate JSON web token
     })
     .then(idToken => {
-      token = idToken; // Set generated as JSON web token
+      token = idToken; // Set as generated JSON web token
       const userCreds = {
         userHandle: newUser.userHandle,
         email: newUser.email,
