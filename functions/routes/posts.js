@@ -208,3 +208,27 @@ exports.unlikePost = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.deletePost = (req, res) => {
+  const postDoc = db.doc(`/posts/${req.params.postId}`);
+  postDoc
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Post not found." });
+      }
+      // Check if authorised user made specific post
+      if (doc.data().userHandle !== req.user.userHandle) {
+        return res.status(403).json({ error: "Unauthorised." });
+      } else {
+        return postDoc.delete();
+      }
+    })
+    .then(() => {
+      return res.json({ message: "Post deleted successfully." });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};

@@ -11,7 +11,8 @@ const {
   getPost,
   commentOnPost,
   likePost,
-  unlikePost
+  unlikePost,
+  deletePost
 } = require("./routes/posts");
 app.get("/posts", getAllPosts); // Get all posts from DB
 app.post("/post", FBAuth, createPost); // Create post
@@ -19,6 +20,7 @@ app.get("/post/:postId", getPost); // Get specific post
 app.post("/post/:postId/comment", FBAuth, commentOnPost); // Comment on specific post
 app.get("/post/:postId/like", FBAuth, likePost); // Like specific post
 app.get("/post/:postId/unlike", FBAuth, unlikePost); // Unlike specific post
+app.delete("/post/:postId", FBAuth, deletePost);
 
 // User routes
 const {
