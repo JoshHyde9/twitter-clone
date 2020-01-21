@@ -5,9 +5,10 @@ const app = express();
 const FBAuth = require("./util/FBAuth");
 
 // Post routes
-const { getAllPosts, createPost } = require("./routes/posts");
+const { getAllPosts, createPost, getPost } = require("./routes/posts");
 app.get("/posts", getAllPosts); // Get all posts from DB
 app.post("/post", FBAuth, createPost); // Create post
+app.get("/post/:postId", getPost);
 
 // User routes
 const {

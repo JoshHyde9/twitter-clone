@@ -41,3 +41,39 @@ exports.createPost = (req, res) => {
       return res.status(500).json({ error: `Something went wrong...` });
     });
 };
+
+exports.getPost = (req, res) => {
+  let postData = {};
+
+  // Query DB for post with requested id
+  db.doc(`/posts/${req.params.postId}`)
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Post not found." });
+      }
+
+      // TODO: Get likes that contains requested post id
+
+      // Get comments that contains requested post id
+      postData = doc.data();
+      postData.postId = doc.id;
+      return db
+        .collection("comments")
+        .orderBy("createdAt", "desc")
+        .where("postId", "==", req.params.postId)
+        .get();
+    })
+    .then(data => {
+      // Add each comment to array
+      postData.comments = [];
+      data.forEach(doc => {
+        postData.comments.push(doc.data());
+      });
+      return res.json(postData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
