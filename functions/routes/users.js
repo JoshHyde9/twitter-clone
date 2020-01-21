@@ -6,7 +6,11 @@ const firebaseConfig = require("../util/config");
 // Init DB with config
 firebase.initializeApp(firebaseConfig);
 
-const { validateSignUpData, validateLoginData } = require("../util/validators");
+const {
+  validateSignUpData,
+  validateLoginData,
+  reduceUserDetails
+} = require("../util/validators");
 
 exports.signUp = (req, res) => {
   const newUser = {
@@ -95,6 +99,20 @@ exports.login = (req, res) => {
       if (err.code === "auth/wrong-password") {
         return res.status(403).json({ general: "Invaild credentials." });
       }
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
+exports.addUserDetails = (req, res) => {
+  let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.userHandle}`)
+    .update(userDetails)
+    .then(() => {
+      return res.json({ message: "Details updated successfully." });
+    })
+    .catch(err => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });

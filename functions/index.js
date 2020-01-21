@@ -10,10 +10,16 @@ app.get("/posts", getAllPosts); // Get all posts from DB
 app.post("/post", FBAuth, createPost); // Create post
 
 // User routes
-const { signUp, login, uploadImage } = require("./routes/users");
+const {
+  signUp,
+  login,
+  uploadImage,
+  addUserDetails
+} = require("./routes/users");
 app.post("/signup", signUp); // Signup users
 app.post("/login", login); // Login users
 app.post("/user/image", FBAuth, uploadImage);
+app.post("/user", FBAuth, addUserDetails);
 
 // Creates API function
 // http://www.baseurl.com/api/
