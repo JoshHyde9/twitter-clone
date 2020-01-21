@@ -58,8 +58,6 @@ exports.getPost = (req, res) => {
         return res.status(404).json({ error: "Post not found." });
       }
 
-      // TODO: Get likes that contains requested post id
-
       // Get comments that contains requested post id
       postData = doc.data();
       postData.postId = doc.id;
@@ -104,6 +102,10 @@ exports.commentOnPost = (req, res) => {
       if (!doc.exists) {
         return res.status(404).json({ error: "Post not found." });
       }
+      // Increment comment count by 1
+      return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
+    })
+    .then(() => {
       // Add comment to post
       return db.collection("comments").add(newComment);
     })
@@ -116,6 +118,93 @@ exports.commentOnPost = (req, res) => {
     });
 };
 
-exports.likePost = (req, res) => {};
+exports.likePost = (req, res) => {
+  const likeDoc = db
+    .collection("likes")
+    .where("userHandle", "==", req.user.userHandle)
+    .where("postId", "==", req.params.postId)
+    .limit(1);
 
-exports.unlikePost = (req, res) => {};
+  const postDoc = db.doc(`/posts/${req.params.postId}`);
+
+  let postData;
+
+  postDoc
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDoc.get();
+      } else {
+        return res.status(404).json({ error: "Post not found." });
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return db
+          .collection("likes")
+          .add({
+            postId: req.params.postId,
+            userHandle: req.user.userHandle
+          })
+          .then(() => {
+            postData.likeCount++;
+            return postDoc.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            return res.json(postData);
+          });
+      } else {
+        return res.status(400).json({ error: "Post already liked." });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
+exports.unlikePost = (req, res) => {
+  const likeDoc = db
+    .collection("likes")
+    .where("userHandle", "==", req.user.userHandle)
+    .where("postId", "==", req.params.postId)
+    .limit(1);
+
+  const postDoc = db.doc(`/posts/${req.params.postId}`);
+
+  let postData;
+
+  postDoc
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        postData = doc.data();
+        postData.postId = doc.id;
+        return likeDoc.get();
+      } else {
+        return res.status(404).json({ error: "Post not found." });
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return res.status(400).json({ error: "Post not liked." });
+      } else {
+        return db
+          .doc(`/likes/${data.docs[0].id}`)
+          .delete()
+          .then(() => {
+            postData.likeCount--;
+            return postDoc.update({ likeCount: postData.likeCount });
+          })
+          .then(() => {
+            return res.json(postData);
+          });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};

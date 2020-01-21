@@ -18,7 +18,7 @@ app.post("/post", FBAuth, createPost); // Create post
 app.get("/post/:postId", getPost); // Get specific post
 app.post("/post/:postId/comment", FBAuth, commentOnPost); // Comment on specific post
 app.get("/post/:postId/like", FBAuth, likePost); // Like specific post
-app.get("/post/:postId/unlike", FBAuth, unlikePost);
+app.get("/post/:postId/unlike", FBAuth, unlikePost); // Unlike specific post
 
 // User routes
 const {
@@ -30,9 +30,9 @@ const {
 } = require("./routes/users");
 app.post("/signup", signUp); // Signup users
 app.post("/login", login); // Login users
-app.post("/user/image", FBAuth, uploadImage);
-app.post("/user", FBAuth, addUserDetails);
-app.get("/user/", FBAuth, getAuthenticatedUser);
+app.post("/user/image", FBAuth, uploadImage); // Upload user profile picture
+app.post("/user", FBAuth, addUserDetails); // Add user info (Bio, website, location)
+app.get("/user/", FBAuth, getAuthenticatedUser); // Get authenticated user
 
 // Creates API function
 // http://www.baseurl.com/api/
