@@ -14,12 +14,14 @@ const {
   signUp,
   login,
   uploadImage,
-  addUserDetails
+  addUserDetails,
+  getAuthenticatedUser
 } = require("./routes/users");
 app.post("/signup", signUp); // Signup users
 app.post("/login", login); // Login users
 app.post("/user/image", FBAuth, uploadImage);
 app.post("/user", FBAuth, addUserDetails);
+app.get("/user/", FBAuth, getAuthenticatedUser);
 
 // Creates API function
 // http://www.baseurl.com/api/
