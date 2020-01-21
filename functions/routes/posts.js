@@ -27,14 +27,19 @@ exports.createPost = (req, res) => {
   const newPost = {
     content: req.body.content,
     userHandle: req.user.userHandle,
-    createdAt: new Date().toISOString()
+    userImage: req.user.imageURL,
+    createdAt: new Date().toISOString(),
+    likeCount: 0,
+    commentCount: 0
   };
 
   // Create post
   db.collection("posts")
     .add(newPost)
     .then(doc => {
-      return res.json({ message: `Document ${doc.id} created successfully` });
+      const resPost = newPost;
+      resPost.postId = doc.id;
+      return res.json(resPost);
     })
     .catch(err => {
       console.error(err);
@@ -110,3 +115,7 @@ exports.commentOnPost = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.likePost = (req, res) => {};
+
+exports.unlikePost = (req, res) => {};
