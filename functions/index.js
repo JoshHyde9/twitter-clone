@@ -171,6 +171,50 @@ app.post("/signup", (req, res) => {
     });
 });
 
+// Login route
+app.post("/login", (req, res) => {
+  const user = {
+    email: req.body.email,
+    password: req.body.password
+  };
+
+  // Login validation
+  let errors = {};
+
+  if (isEmpty(user.email)) {
+    errors.email = "Must not be empty.";
+  } else if (!isEmail(user.email)) {
+    errors.email = "Email must be valid.";
+  }
+
+  if (isEmpty(user.password)) {
+    errors.password = "Must not be empty.";
+  }
+
+  // Check if there are any errors in errors object and return with such
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json(errors);
+  }
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(user.email, user.password)
+    .then(data => {
+      return data.user.getIdToken(); // Generate JSON web token
+    })
+    .then(token => {
+      return res.json({ token }); // return with JSON web token
+    })
+    .catch(err => {
+      console.error(err);
+      // Renamed returned error to give a general so other users don't know which credential is wrong (Bruteforce attack)
+      if (err.code === "auth/wrong-password") {
+        return res.status(403).json({ general: "Invaild credentials." });
+      }
+      return res.status(500).json({ error: err.code });
+    });
+});
+
 // Creates API function
 // http://www.baseurl.com/api/
 exports.api = functions.region("asia-east2").https.onRequest(app);
