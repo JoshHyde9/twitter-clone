@@ -206,11 +206,11 @@ app.post("/login", (req, res) => {
       return res.json({ token }); // return with JSON web token
     })
     .catch(err => {
-      console.error(err);
       // Renamed returned error to give a general so other users don't know which credential is wrong (Bruteforce attack)
       if (err.code === "auth/wrong-password") {
         return res.status(403).json({ general: "Invaild credentials." });
       }
+      console.error(err);
       return res.status(500).json({ error: err.code });
     });
 });
