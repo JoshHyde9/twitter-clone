@@ -68,7 +68,7 @@ exports.signUp = (req, res) => {
       if (err.code === "auth/email-already-in-use") {
         return res.status(400).json({ email: "Email is already in use" });
       } else {
-        return res.status(500).json({ error: err.code });
+        return res.status(500).json({ general: "Something went wrong" });
       }
     });
 };
@@ -95,12 +95,9 @@ exports.login = (req, res) => {
       return res.json({ token }); // return with JSON web token
     })
     .catch(err => {
-      // Renamed returned error to give a general so other users don't know which credential is wrong (Bruteforce attack)
-      if (err.code === "auth/wrong-password") {
-        return res.status(403).json({ general: "Invaild credentials." });
-      }
       console.error(err);
-      return res.status(500).json({ error: err.code });
+      // Return with general error so other users don't know which credential is wrong (Bruteforce attack)
+      return res.status(500).json({ general: "Invalid credentials" });
     });
 };
 
