@@ -30,13 +30,17 @@ const {
   login,
   uploadImage,
   addUserDetails,
-  getAuthenticatedUser
+  getAuthenticatedUser,
+  getUserDetails,
+  markNotificationsAsRead
 } = require("./routes/users");
 app.post("/signup", signUp); // Signup users
 app.post("/login", login); // Login users
 app.post("/user/image", FBAuth, uploadImage); // Upload user profile picture
 app.post("/user", FBAuth, addUserDetails); // Add user info (Bio, website, location)
 app.get("/user/", FBAuth, getAuthenticatedUser); // Get authenticated user
+app.get("/user/:userHandle", getUserDetails); // Get specific users details
+app.post("/notifications", FBAuth, markNotificationsAsRead); // Read unread notifications
 
 // Creates API function
 // http://www.baseurl.com/api/
