@@ -11,6 +11,9 @@ exports.getAllPosts = (req, res) => {
           postId: doc.id,
           content: doc.data().content,
           userHandle: doc.data().userHandle,
+          commentCount: doc.data().commentCount,
+          likeCount: doc.data().likeCount,
+          userImage: doc.data().userImage,
           createdAt: doc.data().createdAt
         });
       });
@@ -83,7 +86,7 @@ exports.getPost = (req, res) => {
 
 exports.commentOnPost = (req, res) => {
   if (req.body.content.trim() === "") {
-    return res.status(400).json({ error: "Must not be empty. " });
+    return res.status(400).json({ comment: "Must not be empty. " });
   }
 
   const newComment = {
