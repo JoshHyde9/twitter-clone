@@ -117,7 +117,7 @@ exports.onUserImageChange = functions
   .firestore.document("/users/{userId}")
   .onUpdate(change => {
     if (change.before.data().imageURL !== change.after.data().imageURL) {
-      let batch = db.batch();
+      const batch = db.batch();
       return db
         .collection("/posts")
         .where("userHandle", "==", change.before.data().userHandle)
@@ -129,5 +129,47 @@ exports.onUserImageChange = functions
           });
           return batch.commit();
         });
+    } else {
+      return true;
     }
+  });
+
+exports.onPostDelete = functions
+  .region("asia-east2")
+  .firestore.document("/posts/{postId}")
+  .onDelete((snapshot, context) => {
+    const postId = context.params.postId;
+    const batch = db.batch();
+
+    return db
+      .collection("comments")
+      .where("postId", "==", postId)
+      .get()
+      .then(data => {
+        data.forEach(doc => {
+          batch.delete(db.doc(`/comments/${doc.id}`));
+        });
+        return db
+          .collection("likes")
+          .where("postId", "==", postId)
+          .get();
+      })
+      .then(data => {
+        data.forEach(doc => {
+          batch.delete(db.doc(`/likes/${doc.id}`));
+        });
+        return db
+          .collection("notifications")
+          .where("postId", "==", postId)
+          .get();
+      })
+      .then(data => {
+        data.forEach(doc => {
+          batch.delete(db.doc(`/notifications/${doc.id}`));
+        });
+        return batch.commit();
+      })
+      .catch(err => {
+        console.error(err);
+      });
   });
