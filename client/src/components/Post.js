@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -23,6 +25,7 @@ const styles = {
 
 export class Post extends Component {
   render() {
+    dayjs.extend(relativeTime);
     const {
       classes,
       post: {
@@ -46,7 +49,7 @@ export class Post extends Component {
             {userHandle}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {createdAt}
+            {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">{content}</Typography>
         </CardContent>
