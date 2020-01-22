@@ -12,37 +12,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const styles = {
-  form: {
-    textAlign: "center"
-  },
-  image: {
-    maxWidth: "100px",
-    margin: "20px auto"
-  },
-  pageTitle: {
-    margin: "10px auto",
-    fontFamily: "Ubuntu"
-  },
-  textField: {
-    margin: "10px auto"
-  },
-  button: {
-    marginTop: 20,
-    position: "relative"
-  },
-  customError: {
-    color: "red",
-    fontSize: "0.8rem",
-    marginTop: 10
-  },
-  progress: {
-    position: "absolute"
-  },
-  route: {
-    color: "#008394"
-  }
-};
+const styles = theme => ({
+  ...theme.spreadThis
+});
 
 export class Login extends Component {
   constructor() {
@@ -86,12 +58,19 @@ export class Login extends Component {
         return res.json();
       })
       .then(data => {
-        this.setState({
-          errors: data,
-          loading: false
-        });
-        if (!this.state.errors) {
+        if (
+          (Object.keys(this.state.errors).length === 0 &&
+            this.state.errors.constructor === Object &&
+            typeof data.general == "undefined") ||
+          data.general == null
+        ) {
+          localStorage.setItem("FBIdToken", `Bearer ${data.token}`);
           this.props.history.push("/");
+        } else {
+          this.setState({
+            errors: data,
+            loading: false
+          });
         }
       })
       .catch(err => {
@@ -130,7 +109,7 @@ export class Login extends Component {
               label="Password"
               className={classes.textField}
               helperText={errors.password}
-              error={errors.email ? true : false}
+              error={errors.password ? true : false}
               value={this.state.password}
               onChange={this.handleChange}
               fullWidth
