@@ -111,3 +111,23 @@ exports.createNotificationOnComment = functions
         return console.error(err);
       });
   });
+
+exports.onUserImageChange = functions
+  .region("asia-east2")
+  .firestore.document("/users/{userId}")
+  .onUpdate(change => {
+    if (change.before.data().imageURL !== change.after.data().imageURL) {
+      let batch = db.batch();
+      return db
+        .collection("/posts")
+        .where("userHandle", "==", change.before.data().userHandle)
+        .get()
+        .then(data => {
+          data.forEach(doc => {
+            const post = db.doc(`/posts/${doc.id}`);
+            batch.update(post, { userImage: change.after.data().imageURL });
+          });
+          return batch.commit();
+        });
+    }
+  });
