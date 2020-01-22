@@ -50,10 +50,14 @@ exports.createNotificationOnLike = functions
   .region("asia-east2")
   .firestore.document("likes/{id}")
   .onCreate(snapshot => {
-    db.doc(`/posts/${snapshot.data().postId}`)
+    return db
+      .doc(`/posts/${snapshot.data().postId}`)
       .get()
       .then(doc => {
-        if (doc.exists) {
+        if (
+          doc.exists &&
+          doc.data().userHandle !== snapshot.data().userHandle
+        ) {
           return db.doc(`/notifications/${snapshot.id}`).set({
             postId: doc.id,
             recipient: doc.data().userHandle,
@@ -64,9 +68,6 @@ exports.createNotificationOnLike = functions
           });
         }
       })
-      .then(() => {
-        return;
-      })
       .catch(err => {
         return console.error(err);
       });
@@ -76,11 +77,9 @@ exports.deleteNotificationOnUnlike = functions
   .region("asia-east2")
   .firestore.document("likes/{id}")
   .onDelete(snapshot => {
-    db.doc(`/notifications/${snapshot.id}`)
+    return db
+      .doc(`/notifications/${snapshot.id}`)
       .delete()
-      .then(() => {
-        return;
-      })
       .catch(err => {
         return console.error(err);
       });
@@ -90,10 +89,14 @@ exports.createNotificationOnComment = functions
   .region("asia-east2")
   .firestore.document("comments/{id}")
   .onCreate(snapshot => {
-    db.doc(`/posts/${snapshot.data().postId}`)
+    return db
+      .doc(`/posts/${snapshot.data().postId}`)
       .get()
       .then(doc => {
-        if (doc.exists) {
+        if (
+          doc.exists &&
+          doc.data().userHandle !== snapshot.data().userHandle
+        ) {
           return db.doc(`/notifications/${snapshot.id}`).set({
             postId: doc.id,
             recipient: doc.data().userHandle,
@@ -103,9 +106,6 @@ exports.createNotificationOnComment = functions
             createdAt: new Date().toISOString()
           });
         }
-      })
-      .then(() => {
-        return;
       })
       .catch(err => {
         return console.error(err);
