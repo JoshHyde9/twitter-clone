@@ -10,9 +10,9 @@ import { SET_AUTHENTICATED } from "./redux/types";
 import { logOutUser, getUserData } from "./redux/actions/userActions";
 
 // Styles
-import "./scss/style.css";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import "./scss/style.css";
 
 // Material-UI
 import themeFile from "./util/theme";

@@ -13,8 +13,6 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import MuiLink from "@material-ui/core/Link";
 import Typeography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
 // Material-UI Icons
 import LocationOn from "@material-ui/icons/LocationOn";
 import InsertLink from "@material-ui/icons/InsertLink";
@@ -24,6 +22,9 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 // Components
 import EditDetails from "./EditDetails";
+
+// Util
+import ToolTipButton from "../util/ToolTipButton";
 
 const styles = theme => ({
   paper: {
@@ -121,11 +122,13 @@ export class Profile extends Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <Tooltip title="Upload profile picture" placement="top">
-                <IconButton onClick={this.handleEditPicture} className="button">
-                  <Edit color="primary" />
-                </IconButton>
-              </Tooltip>
+              <ToolTipButton
+                tip="Upload Profile Picture"
+                onClick={this.handleEditPicture}
+                placement="top"
+              >
+                <Edit color="primary" />
+              </ToolTipButton>
             </div>
             <hr />
             <div className="profile-details">
@@ -159,11 +162,13 @@ export class Profile extends Component {
               <CalendarToday color="primary" />{" "}
               <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
-            <Tooltip title="Logout" placement="top">
-              <IconButton onClick={this.handleLogout}>
-                <KeyboardReturn color="primary" />
-              </IconButton>
-            </Tooltip>
+            <ToolTipButton
+              tip="Logout"
+              onClick={this.handleLogout}
+              placement="top"
+            >
+              <KeyboardReturn color="primary" />
+            </ToolTipButton>
             <EditDetails />
           </div>
         </Paper>
