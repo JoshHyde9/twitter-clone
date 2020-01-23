@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 
 import Logo from "../images/logo.png";
 
+// Redux
+import { connect } from "react-redux";
+import { signUpUser } from "../redux/actions/userActions";
+
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -24,7 +28,6 @@ export class Signup extends Component {
       password: "",
       confirmPassword: "",
       userHandle: "",
-      loading: false,
       errors: {}
     };
 
@@ -38,11 +41,15 @@ export class Signup extends Component {
     });
   }
 
+  // Set errors to UI
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({
-      loading: true
-    });
 
     const newUserData = {
       userHandle: this.state.userHandle,
@@ -51,35 +58,15 @@ export class Signup extends Component {
       confirmPassword: this.state.confirmPassword
     };
 
-    fetch("/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newUserData)
-    })
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        if (data["userHandle"] || data["password"] || data["email"]) {
-          this.setState({
-            errors: data,
-            loading: false
-          });
-        } else {
-          localStorage.setItem("FBIdToken", `Bearer ${data.token}`);
-          this.props.history.push("/");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    this.props.signUpUser(newUserData, this.props.history);
   }
 
   render() {
-    const { classes } = this.props;
-    const { errors, loading } = this.state;
+    const {
+      classes,
+      UI: { loading }
+    } = this.props;
+    const { errors } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -170,7 +157,21 @@ export class Signup extends Component {
 }
 
 Signup.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  signUpUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  user: state.user,
+  UI: state.UI
+});
+
+const mapActionsToProps = {
+  signUpUser
 };
 
-export default withStyles(styles)(Signup);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Signup));
