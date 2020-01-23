@@ -19,11 +19,15 @@ import Favourite from "@material-ui/icons/Favorite";
 import { connect } from "react-redux";
 import { likePost, unLikePost } from "../redux/actions/dataActions";
 
+// Comonents
+import DeletePost from "./DeletePost";
+
 // Util
 import ToolTipButton from "../util/ToolTipButton";
 
 const styles = {
   card: {
+    position: "relative",
     display: "flex",
     marginBottom: 20
   },
@@ -63,10 +67,12 @@ export class Post extends Component {
         userHandle,
         createdAt,
         likeCount,
-        commentCount
+        commentCount,
+        postId
       },
       user: { authenticated }
     } = this.props;
+    const handle = this.props.user.credentials.userHandle;
     const likeButton = !authenticated ? (
       <ToolTipButton tip="Like">
         <Link to="/login">
@@ -83,7 +89,10 @@ export class Post extends Component {
       </ToolTipButton>
     );
 
-    // const deleteButton =
+    const deleteButton =
+      authenticated && userHandle === handle ? (
+        <DeletePost postId={postId} />
+      ) : null;
 
     return (
       <Card className={classes.card}>
@@ -93,10 +102,10 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
-          <Typography variant="h5" component={Link}>
+          <Typography variant="h5" component={Link} to="#">
             {userHandle}
           </Typography>
-          {/* {deleteButton} */}
+          {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
