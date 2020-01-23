@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // Components
 import Post from "../components/Post";
+import Profile from "../components/Profile";
 
 // Material-UI
 import Grid from "@material-ui/core/Grid";
@@ -26,12 +27,12 @@ export class Home extends Component {
       <p>Loading...</p>
     );
     return (
-      <Grid container spacing={10}>
-        <Grid item sm={6} xs={8}>
+      <Grid container spacing={6}>
+        <Grid item sm={8} xs={12}>
           {postsMarkup}
         </Grid>
-        <Grid item sm={4} xs={10}>
-          <p>World!</p>
+        <Grid item sm={4} xs={12}>
+          <Profile />
         </Grid>
       </Grid>
     );
