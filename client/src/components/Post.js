@@ -82,6 +82,9 @@ export class Post extends Component {
         <FavouriteBorder color="primary" />
       </ToolTipButton>
     );
+
+    // const deleteButton =
+
     return (
       <Card className={classes.card}>
         <CardMedia
@@ -93,6 +96,7 @@ export class Post extends Component {
           <Typography variant="h5" component={Link}>
             {userHandle}
           </Typography>
+          {/* {deleteButton} */}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
@@ -102,8 +106,11 @@ export class Post extends Component {
             {likeCount} {likeCount === 1 ? "like" : "likes"}{" "}
           </span>
           <ToolTipButton tip="Comments">
-            <ChatIcon />
+            <ChatIcon color="primary" />
           </ToolTipButton>
+          <span>
+            {commentCount} {commentCount === 1 ? "comment" : "comments"}
+          </span>
         </CardContent>
       </Card>
     );
