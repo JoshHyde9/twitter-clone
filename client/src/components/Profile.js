@@ -20,6 +20,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import InsertLink from "@material-ui/icons/InsertLink";
 import CalendarToday from "@material-ui/icons/CalendarToday";
 import Edit from "@material-ui/icons/Edit";
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 const styles = theme => ({
   paper: {
@@ -81,6 +82,10 @@ export class Profile extends Component {
   handleEditPicture = () => {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();
+  };
+
+  handleLogout = () => {
+    this.props.logOutUser();
   };
 
   render() {
@@ -151,6 +156,11 @@ export class Profile extends Component {
               <CalendarToday color="primary" />{" "}
               <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
+            <Tooltip title="Logout" placement="top">
+              <IconButton onClick={this.handleLogout}>
+                <KeyboardReturn color="primary" />
+              </IconButton>
+            </Tooltip>
           </div>
         </Paper>
       ) : (
