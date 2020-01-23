@@ -22,6 +22,9 @@ import CalendarToday from "@material-ui/icons/CalendarToday";
 import Edit from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
+// Components
+import EditDetails from "./EditDetails";
+
 const styles = theme => ({
   paper: {
     padding: 20
@@ -161,6 +164,7 @@ export class Profile extends Component {
                 <KeyboardReturn color="primary" />
               </IconButton>
             </Tooltip>
+            <EditDetails />
           </div>
         </Paper>
       ) : (

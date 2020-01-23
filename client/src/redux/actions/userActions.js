@@ -84,6 +84,18 @@ export const uploadImage = formData => dispatch => {
     });
 };
 
+export const editUserDetails = userDetails => dispatch => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user", userDetails)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
 const setAuthorisationHeader = token => {
   const FBIdToken = `Bearer ${token}`;
   // Set JWT to localStorage
