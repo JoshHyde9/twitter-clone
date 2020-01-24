@@ -19,7 +19,7 @@ import ToolTipButton from "../util/ToolTipButton";
 
 // Redux
 import { connect } from "react-redux";
-import { createPost } from "../redux/actions/dataActions";
+import { createPost, clearErrors } from "../redux/actions/dataActions";
 
 const styles = theme => ({
   ...theme.spreadThis,
@@ -52,8 +52,10 @@ export class CreatePost extends Component {
   };
 
   handleClose = () => {
+    this.props.clearErrors();
     this.setState({
-      open: false
+      open: false,
+      errors: {}
     });
   };
 
@@ -142,6 +144,7 @@ export class CreatePost extends Component {
 
 CreatePost.propTypes = {
   createPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
@@ -149,6 +152,6 @@ const mapStateToProps = state => ({
   UI: state.UI
 });
 
-export default connect(mapStateToProps, { createPost })(
+export default connect(mapStateToProps, { createPost, clearErrors })(
   withStyles(styles)(CreatePost)
 );

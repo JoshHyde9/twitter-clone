@@ -88,3 +88,7 @@ export const deletePost = postId => dispatch => {
       console.error(err);
     });
 };
+
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS });
+};
