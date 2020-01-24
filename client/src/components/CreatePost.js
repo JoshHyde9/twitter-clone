@@ -25,7 +25,8 @@ const styles = theme => ({
   ...theme.spreadThis,
   submitButton: {
     position: "relative",
-    marginTop: "5px"
+    float: "right",
+    margin: "15px 0 10px 0"
   },
   progressSpinner: {
     position: "absolute"
