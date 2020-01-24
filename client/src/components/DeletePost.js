@@ -22,7 +22,6 @@ const styles = {
   deleteButton: {
     position: "absolute",
     right: 0,
-    top: "10%",
     marginRight: "20px"
   }
 };

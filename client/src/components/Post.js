@@ -29,7 +29,8 @@ const styles = {
   card: {
     position: "relative",
     display: "flex",
-    marginBottom: 20
+    marginBottom: 20,
+    maxHeight: "180px"
   },
   image: {
     minWidth: 200
@@ -102,14 +103,18 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
-          <Typography variant="h5" component={Link} to="#">
+          <Typography variant="h5" component={Link} to="/users/${userHandle}">
             {userHandle}
           </Typography>
           {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
-          <Typography variant="body1">{content}</Typography>
+          <Typography variant="body1">
+            {content.length > 140
+              ? `${content.substring(0, 140)}... Read more`
+              : content}
+          </Typography>
           {likeButton}
           <span>
             {likeCount} {likeCount === 1 ? "like" : "likes"}{" "}
