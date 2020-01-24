@@ -103,6 +103,7 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
+          {/* TODO: Fix user handle route */}
           <Typography variant="h5" component={Link} to="/users/${userHandle}">
             {userHandle}
           </Typography>
