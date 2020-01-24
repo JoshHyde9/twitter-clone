@@ -5,6 +5,9 @@ import PropTypes from "prop-types";
 // Util
 import ToolTipButton from "../util/ToolTipButton";
 
+// Components
+import CreatePost from "./CreatePost";
+
 // Redux
 import { connect } from "react-redux";
 
@@ -13,7 +16,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 // Material-UI Icons
-import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import Notifications from "@material-ui/icons/Notifications";
 
@@ -25,9 +27,7 @@ export class NavBar extends Component {
         <Toolbar className="nav-container">
           {authenticated ? (
             <>
-              <ToolTipButton tip="Post A Twat">
-                <AddIcon color="primary" />
-              </ToolTipButton>
+              <CreatePost />
               <Link to="/">
                 <ToolTipButton tip="Home">
                   <HomeIcon color="primary" />
