@@ -31,8 +31,8 @@ const styles = theme => ({
     margin: 4
   },
   profileImage: {
-    maxWidth: 200,
-    height: 200,
+    maxWidth: 80,
+    height: 80,
     borderRadius: "50%",
     objectFit: "cover"
   },
@@ -52,6 +52,9 @@ const styles = theme => ({
   spinner: {
     textAlign: "center",
     margin: "50px 0"
+  },
+  userHandles: {
+    margin: "10px 10px 0 10px"
   }
 });
 
@@ -93,18 +96,19 @@ export class PostDialog extends Component {
       </div>
     ) : (
       <Grid container spacing={16}>
-        <Grid item sm={5}>
-          <img src={userImage} alt="Profile" className={classes.profileImage} />
-        </Grid>
-        <Grid item sm={7}>
+        <img src={userImage} alt="Profile" className={classes.profileImage} />
+        <Grid item sm={14} className={classes.userHandles}>
+          <Typography>Hello</Typography>
           <Typography
             component={Link}
             color="primary"
-            variant="h5"
+            variant="h6"
             to={`/users/${userHandle}`}
           >
             @{userHandle}
           </Typography>
+        </Grid>
+        <Grid item sm={16}>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).format("HH:mm, MMMM DD YYYY")}
