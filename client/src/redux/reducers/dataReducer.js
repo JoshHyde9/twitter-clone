@@ -39,7 +39,7 @@ export default function(state = initState, action) {
       );
       state.posts[index] = action.payload;
       if (state.post.postId === action.payload.postId) {
-        state.post = action.payload;
+        state.post.likeCount = action.payload.likeCount;
       }
       return {
         ...state

@@ -65,6 +65,18 @@ export default {
       "&:hover": {
         textDecoration: "underline"
       }
+    },
+    invisibleSeparator: {
+      border: "none",
+      margin: 4
+    },
+    visibleSeparator: {
+      width: "100%",
+      marginBottom: 20,
+      border: 0,
+      height: "1px",
+      background: "#095484",
+      backgroundImage: "linear-gradient(to right, #192735, #01a0b5, #192735)"
     }
   }
 };

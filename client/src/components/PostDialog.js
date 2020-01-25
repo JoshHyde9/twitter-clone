@@ -9,6 +9,7 @@ import { getPost } from "../redux/actions/dataActions";
 
 // Components
 import LikeButton from "./LikeButton";
+import Comments from "./Comments";
 
 // Util
 import ToolTipButton from "../util/ToolTipButton";
@@ -29,18 +30,14 @@ import UnfoldMore from "@material-ui/icons/UnfoldMore";
 // Styles
 const styles = theme => ({
   ...theme.spreadThis,
-  invisibleSeparator: {
-    border: "none",
-    margin: 4
-  },
   profileImage: {
-    maxWidth: 80,
-    height: 80,
-    borderRadius: "50%",
-    objectFit: "cover"
+    maxWidth: "80px",
+    height: "80px",
+    objectFit: "cover",
+    borderRadius: "50%"
   },
   dialogContent: {
-    padding: 20,
+    padding: "20px",
     backgroundColor: "#192735",
     color: "#ddd"
   },
@@ -90,6 +87,7 @@ export class PostDialog extends Component {
         createdAt,
         likeCount,
         commentCount,
+        comments,
         userImage,
         userHandle
       },
@@ -101,39 +99,50 @@ export class PostDialog extends Component {
         <CircularProgress size={200} thickness={2} />
       </div>
     ) : (
-      <Grid container spacing={16}>
-        <img src={userImage} alt="Profile" className={classes.profileImage} />
-        <Grid item sm={14} className={classes.userHandles}>
-          {/* TODO: Add nickname */}
-          <Typography>Nickname goes here!</Typography>
-          <Typography
-            component={Link}
-            className={classes.handle}
-            variant="h6"
-            to={`/users/${userHandle}`}
-          >
-            @{userHandle}
-          </Typography>
+      <>
+        <Grid item sm={10}>
+          <Grid container>
+            <Grid item sm={2}>
+              <img
+                src={userImage}
+                alt="Profile"
+                className={classes.profileImage}
+              />
+            </Grid>
+            <Grid item sm={8}>
+              <div className="handles">
+                <Typography variant="h5">Nickname</Typography>
+                <Typography
+                  className={classes.handle}
+                  variant="subtitle"
+                  component={Link}
+                  to={`/users/${userHandle}`}
+                >
+                  @{userHandle}
+                </Typography>
+              </div>
+              <Typography variant="body2" className={classes.createdAt}>
+                {dayjs(createdAt).format("HH:mm, DD MMMM YYYY")}
+              </Typography>
+              <hr className={classes.invisibleSeparator} />
+              <Typography variant="body1">{content}</Typography>
+              <LikeButton postId={postId} />
+              <span>
+                {likeCount} {likeCount === 1 ? "like" : "likes"}
+              </span>
+
+              <ToolTipButton tip="Comments">
+                <ChatIcon color="primary" />
+              </ToolTipButton>
+              <span>
+                {commentCount} {commentCount === 1 ? "comment" : "comments"}
+              </span>
+              <hr className={classes.visibleSeparator} />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item sm={16}>
-          <hr className={classes.invisibleSeparator} />
-          <Typography variant="body2" className={classes.createdAt}>
-            {dayjs(createdAt).format("HH:mm, MMMM DD YYYY")}
-          </Typography>
-          <hr className={classes.invisibleSeparator} />
-          <Typography variant="body1">{content}</Typography>
-          <LikeButton postId={postId} />
-          <span>
-            {likeCount} {likeCount === 1 ? "like" : "likes"}{" "}
-          </span>
-          <ToolTipButton tip="Comments">
-            <ChatIcon color="primary" />
-          </ToolTipButton>
-          <span>
-            {commentCount} {commentCount === 1 ? "comment" : "comments"}
-          </span>
-        </Grid>
-      </Grid>
+        <Comments comments={comments} />
+      </>
     );
     return (
       <>

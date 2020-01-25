@@ -30,12 +30,14 @@ const styles = theme => ({
     position: "relative",
     display: "flex",
     marginBottom: 20,
-    maxHeight: "180px",
+    maxHeight: "200px",
     backgroundColor: "#192735",
     color: "#ddd"
   },
   image: {
-    minWidth: 200
+    width: "100%",
+    maxWidth: "200px",
+    ObjectFit: "cover"
   },
   content: {
     padding: 25,
@@ -74,8 +76,9 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
+          <Typography variant="h5">Nickname</Typography>
           <Typography
-            variant="h5"
+            variant="subtitle"
             className={classes.handle}
             component={Link}
             to={`/users/${userHandle}`}
@@ -87,7 +90,7 @@ export class Post extends Component {
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">
-            {content.length > 140 ? `${content.substring(0, 140)}...` : content}
+            {content.length > 110 ? `${content.substring(0, 110)}...` : content}
           </Typography>
           <LikeButton postId={postId} />
           <span>
