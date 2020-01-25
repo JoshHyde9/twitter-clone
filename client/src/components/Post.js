@@ -12,8 +12,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 // Material-UI Icons
 import ChatIcon from "@material-ui/icons/Chat";
-import FavouriteBorder from "@material-ui/icons/FavoriteBorder";
-import Favourite from "@material-ui/icons/Favorite";
 
 // Redux
 import { connect } from "react-redux";
@@ -22,6 +20,7 @@ import { likePost, unLikePost } from "../redux/actions/dataActions";
 // Comonents
 import DeletePost from "./DeletePost";
 import PostDialog from "./PostDialog";
+import LikeButton from "./LikeButton";
 
 // Util
 import ToolTipButton from "../util/ToolTipButton";
@@ -43,22 +42,6 @@ const styles = {
 };
 
 export class Post extends Component {
-  likedPost = () => {
-    if (
-      this.props.user.likes &&
-      this.props.user.likes.find(like => like.postId === this.props.post.postId)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  likePost = () => {
-    this.props.likePost(this.props.post.postId);
-  };
-  unlikePost = () => {
-    this.props.unLikePost(this.props.post.postId);
-  };
   render() {
     dayjs.extend(relativeTime);
     const {
@@ -75,21 +58,6 @@ export class Post extends Component {
       user: { authenticated }
     } = this.props;
     const handle = this.props.user.credentials.userHandle;
-    const likeButton = !authenticated ? (
-      <ToolTipButton tip="Like">
-        <Link to="/login">
-          <FavouriteBorder color="primary" />
-        </Link>
-      </ToolTipButton>
-    ) : this.likedPost() ? (
-      <ToolTipButton tip="Unlike" onClick={this.unlikePost}>
-        <Favourite color="primary" />
-      </ToolTipButton>
-    ) : (
-      <ToolTipButton tip="Like" onClick={this.likePost}>
-        <FavouriteBorder color="primary" />
-      </ToolTipButton>
-    );
 
     const deleteButton =
       authenticated && userHandle === handle ? (
@@ -114,7 +82,7 @@ export class Post extends Component {
           <Typography variant="body1">
             {content.length > 140 ? `${content.substring(0, 140)}...` : content}
           </Typography>
-          {likeButton}
+          <LikeButton postId={postId} />
           <span>
             {likeCount} {likeCount === 1 ? "like" : "likes"}{" "}
           </span>
