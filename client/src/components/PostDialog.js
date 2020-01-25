@@ -98,7 +98,8 @@ export class PostDialog extends Component {
       <Grid container spacing={16}>
         <img src={userImage} alt="Profile" className={classes.profileImage} />
         <Grid item sm={14} className={classes.userHandles}>
-          <Typography>Hello</Typography>
+          {/* TODO: Add nickname */}
+          <Typography>Nickname goes here!</Typography>
           <Typography
             component={Link}
             color="primary"
