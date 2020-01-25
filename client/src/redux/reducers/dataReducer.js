@@ -5,7 +5,8 @@ import {
   LOADING_DATA,
   DELETE_POST,
   CREATE_POST,
-  SET_POST
+  SET_POST,
+  CREATE_COMMENT
 } from "../types";
 
 const initState = {
@@ -39,7 +40,7 @@ export default function(state = initState, action) {
       );
       state.posts[index] = action.payload;
       if (state.post.postId === action.payload.postId) {
-        state.post.likeCount = action.payload.likeCount;
+        state.post = { ...state.post, ...action.payload };
       }
       return {
         ...state
@@ -60,6 +61,15 @@ export default function(state = initState, action) {
         ...state,
         posts: [action.payload, ...state.posts]
       };
+    case CREATE_COMMENT: {
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [action.payload, ...state.post.comments]
+        }
+      };
+    }
     default:
       return state;
   }

@@ -5,11 +5,12 @@ import dayjs from "dayjs";
 
 // Redux
 import { connect } from "react-redux";
-import { getPost } from "../redux/actions/dataActions";
+import { getPost, clearErrors } from "../redux/actions/dataActions";
 
 // Components
 import LikeButton from "./LikeButton";
 import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 // Util
 import ToolTipButton from "../util/ToolTipButton";
@@ -77,6 +78,7 @@ export class PostDialog extends Component {
     this.setState({
       open: false
     });
+    this.props.clearErrors();
   };
   render() {
     const {
@@ -138,6 +140,7 @@ export class PostDialog extends Component {
                 {commentCount} {commentCount === 1 ? "comment" : "comments"}
               </span>
               <hr className={classes.visibleSeparator} />
+              <CommentForm postId={postId} />
             </Grid>
           </Grid>
         </Grid>
@@ -178,6 +181,7 @@ export class PostDialog extends Component {
 
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   postId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
@@ -190,7 +194,8 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = {
-  getPost
+  getPost,
+  clearErrors
 };
 
 export default connect(
