@@ -34,7 +34,20 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: 0,
-    marginRight: "20px"
+    marginRight: "20px",
+    color: "#ddd"
+  },
+  dialog: {
+    backgroundColor: "#192735",
+    color: "#ddd",
+
+    "& textarea": {
+      color: "#fff"
+    },
+
+    "& label": {
+      color: "#9e9c9c"
+    }
   }
 });
 
@@ -106,8 +119,8 @@ export class CreatePost extends Component {
           >
             <CloseIcon />
           </ToolTipButton>
-          <DialogTitle>Post A New Twat</DialogTitle>
-          <DialogContent>
+          <DialogTitle className={classes.dialog}>Post A New Twat</DialogTitle>
+          <DialogContent className={classes.dialog}>
             <form onSubmit={this.handleSubmit}>
               <TextField
                 name="content"

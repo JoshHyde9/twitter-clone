@@ -6,12 +6,19 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { likePost, unLikePost } from "../redux/actions/dataActions";
 
+// Material-UI
+import withStyles from "@material-ui/core/styles/withStyles";
+
 // Material-UI Icons
 import FavouriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favourite from "@material-ui/icons/Favorite";
 
 // Util
 import ToolTipButton from "../util/ToolTipButton";
+
+const styles = theme => ({
+  ...theme.spreadThis
+});
 
 export class LikeButton extends Component {
   likedPost = () => {
@@ -32,20 +39,21 @@ export class LikeButton extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { authenticated } = this.props.user;
     const likeButton = !authenticated ? (
       <Link to="/login">
         <ToolTipButton tip="Like">
-          <FavouriteBorder color="primary" />
+          <FavouriteBorder className={classes.like} />
         </ToolTipButton>
       </Link>
     ) : this.likedPost() ? (
       <ToolTipButton tip="Unlike" onClick={this.unlikePost}>
-        <Favourite color="primary" />
+        <Favourite className={classes.like} />
       </ToolTipButton>
     ) : (
       <ToolTipButton tip="Like" onClick={this.likePost}>
-        <FavouriteBorder color="primary" />
+        <FavouriteBorder className={classes.like} />
       </ToolTipButton>
     );
     return likeButton;
@@ -68,4 +76,7 @@ const mapActionsToProps = {
   unLikePost
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(LikeButton);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(LikeButton));

@@ -28,7 +28,9 @@ import ToolTipButton from "../util/ToolTipButton";
 
 const styles = theme => ({
   paper: {
-    padding: 20
+    padding: 20,
+    backgroundColor: "#192735",
+    color: "#ddd"
   },
   profile: {
     "& .image-wrapper": {

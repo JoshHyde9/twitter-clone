@@ -23,6 +23,18 @@ const styles = theme => ({
   ...theme.spreadThis,
   button: {
     float: "right"
+  },
+  dialog: {
+    backgroundColor: "#192735",
+    color: "#ddd",
+
+    "& textarea": {
+      color: "#fff"
+    },
+
+    "& label": {
+      color: "#9e9c9c"
+    }
   }
 });
 
@@ -94,9 +106,11 @@ export class EditDetails extends Component {
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Edit your details</DialogTitle>
-          <DialogContent>
-            <form>
+          <DialogTitle className={classes.dialog}>
+            Edit Your Details
+          </DialogTitle>
+          <DialogContent className={classes.dialog}>
+            <form className={classes.form}>
               <TextField
                 name="bio"
                 tpye="text"
@@ -113,7 +127,7 @@ export class EditDetails extends Component {
                 name="website"
                 tpye="text"
                 label="Website"
-                placeholder="Your personal/professinal website"
+                placeholder="Your personal / professinal website"
                 className={classes.textField}
                 value={this.state.website}
                 onChange={this.handleChange}
@@ -131,7 +145,7 @@ export class EditDetails extends Component {
               />
             </form>
           </DialogContent>
-          <DialogActions>
+          <DialogActions className={classes.dialog}>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>

@@ -15,7 +15,6 @@ import ChatIcon from "@material-ui/icons/Chat";
 
 // Redux
 import { connect } from "react-redux";
-import { likePost, unLikePost } from "../redux/actions/dataActions";
 
 // Comonents
 import DeletePost from "./DeletePost";
@@ -25,12 +24,15 @@ import LikeButton from "./LikeButton";
 // Util
 import ToolTipButton from "../util/ToolTipButton";
 
-const styles = {
+const styles = theme => ({
+  ...theme.spreadThis,
   card: {
     position: "relative",
     display: "flex",
     marginBottom: 20,
-    maxHeight: "180px"
+    maxHeight: "180px",
+    backgroundColor: "#192735",
+    color: "#ddd"
   },
   image: {
     minWidth: 200
@@ -39,7 +41,7 @@ const styles = {
     padding: 25,
     ObjectFit: "cover"
   }
-};
+});
 
 export class Post extends Component {
   render() {
@@ -72,11 +74,16 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
-          <Typography variant="h5" component={Link} to={`/users/${userHandle}`}>
-            {userHandle}
+          <Typography
+            variant="h5"
+            className={classes.handle}
+            component={Link}
+            to={`/users/${userHandle}`}
+          >
+            @{userHandle}
           </Typography>
           {deleteButton}
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant="body2" className={classes.createdAt}>
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">
@@ -111,12 +118,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-const mapActionsToProps = {
-  likePost,
-  unLikePost
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withStyles(styles)(Post));
+export default connect(mapStateToProps)(withStyles(styles)(Post));

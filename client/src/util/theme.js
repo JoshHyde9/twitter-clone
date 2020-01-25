@@ -18,7 +18,13 @@ export default {
       useNextVariants: true
     },
     form: {
-      textAlign: "center"
+      textAlign: "center",
+      "& input": {
+        color: "#fff"
+      },
+      "& label": {
+        color: "#9e9c9c"
+      }
     },
     image: {
       maxWidth: "100px",
@@ -45,6 +51,20 @@ export default {
     },
     route: {
       color: "#008394"
+    },
+    like: {
+      color: "#b71c1c"
+    },
+    createdAt: {
+      color: "#9e9c9c"
+    },
+    handle: {
+      color: "#01a0b5",
+      textDecoration: "none",
+
+      "&:hover": {
+        textDecoration: "underline"
+      }
     }
   }
 };

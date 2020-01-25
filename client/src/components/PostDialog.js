@@ -7,13 +7,15 @@ import dayjs from "dayjs";
 import { connect } from "react-redux";
 import { getPost } from "../redux/actions/dataActions";
 
+// Components
+import LikeButton from "./LikeButton";
+
 // Util
 import ToolTipButton from "../util/ToolTipButton";
 
 // Material-UI
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -21,6 +23,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // Material-UI Icons
 import CloseButton from "@material-ui/icons/Close";
+import ChatIcon from "@material-ui/icons/Chat";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
 
 // Styles
@@ -37,12 +40,15 @@ const styles = theme => ({
     objectFit: "cover"
   },
   dialogContent: {
-    padding: 20
+    padding: 20,
+    backgroundColor: "#192735",
+    color: "#ddd"
   },
   closeButton: {
     position: "absolute",
     right: 0,
-    marginRight: "20px"
+    marginRight: "20px",
+    color: "#ddd"
   },
   expandButton: {
     position: "absolute",
@@ -102,7 +108,7 @@ export class PostDialog extends Component {
           <Typography>Nickname goes here!</Typography>
           <Typography
             component={Link}
-            color="primary"
+            className={classes.handle}
             variant="h6"
             to={`/users/${userHandle}`}
           >
@@ -111,11 +117,21 @@ export class PostDialog extends Component {
         </Grid>
         <Grid item sm={16}>
           <hr className={classes.invisibleSeparator} />
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant="body2" className={classes.createdAt}>
             {dayjs(createdAt).format("HH:mm, MMMM DD YYYY")}
           </Typography>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body1">{content}</Typography>
+          <LikeButton postId={postId} />
+          <span>
+            {likeCount} {likeCount === 1 ? "like" : "likes"}{" "}
+          </span>
+          <ToolTipButton tip="Comments">
+            <ChatIcon color="primary" />
+          </ToolTipButton>
+          <span>
+            {commentCount} {commentCount === 1 ? "comment" : "comments"}
+          </span>
         </Grid>
       </Grid>
     );
@@ -132,7 +148,7 @@ export class PostDialog extends Component {
           open={this.state.open}
           onClose={this.handleClose}
           fullWidth
-          maxWidth="sm"
+          maxWidth="md"
         >
           <ToolTipButton
             tip="Close"

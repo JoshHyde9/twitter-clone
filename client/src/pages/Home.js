@@ -26,11 +26,11 @@ export class Home extends Component {
     );
     return (
       <Grid container spacing={6}>
-        <Grid item sm={8} xs={12}>
-          {posts.length === 0 ? <p>THERE'S NO GOD DAMN POSTS</p> : postsMarkup}
-        </Grid>
         <Grid item sm={4} xs={12}>
           <Profile />
+        </Grid>
+        <Grid item sm={8} xs={12}>
+          {posts.length === 0 ? <p>THERE'S NO GOD DAMN POSTS</p> : postsMarkup}
         </Grid>
       </Grid>
     );
