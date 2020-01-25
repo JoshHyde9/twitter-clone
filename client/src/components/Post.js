@@ -21,6 +21,7 @@ import { likePost, unLikePost } from "../redux/actions/dataActions";
 
 // Comonents
 import DeletePost from "./DeletePost";
+import PostDialog from "./PostDialog";
 
 // Util
 import ToolTipButton from "../util/ToolTipButton";
@@ -111,9 +112,7 @@ export class Post extends Component {
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant="body1">
-            {content.length > 140
-              ? `${content.substring(0, 140)}... Read more`
-              : content}
+            {content.length > 140 ? `${content.substring(0, 140)}...` : content}
           </Typography>
           {likeButton}
           <span>
@@ -125,6 +124,7 @@ export class Post extends Component {
           <span>
             {commentCount} {commentCount === 1 ? "comment" : "comments"}
           </span>
+          <PostDialog postId={postId} userHandle={userHandle} />
         </CardContent>
       </Card>
     );
