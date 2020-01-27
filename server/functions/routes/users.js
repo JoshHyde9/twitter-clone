@@ -241,7 +241,7 @@ exports.getUserDetails = (req, res) => {
           userImage: doc.data().userImage,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
-          postId: doc.data().postId,
+          postId: doc.id,
           createdAt: doc.data().createdAt
         });
       });
