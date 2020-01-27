@@ -50,6 +50,9 @@ export class User extends Component {
 
   render() {
     const { posts, loading } = this.props.data;
+
+    console.log(posts);
+
     const { postIdParam } = this.state;
 
     const postsMarkup = loading ? (
