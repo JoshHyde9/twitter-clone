@@ -78,7 +78,7 @@ export class Post extends Component {
         <CardContent className={classes.content}>
           <Typography variant="h5">Nickname</Typography>
           <Typography
-            variant="subtitle"
+            variant="subtitle2"
             className={classes.handle}
             component={Link}
             to={`/users/${userHandle}`}
@@ -110,8 +110,8 @@ export class Post extends Component {
 }
 
 Post.propTypes = {
-  likePost: PropTypes.func.isRequired,
-  unLikePost: PropTypes.func.isRequired,
+  likePost: PropTypes.func,
+  unLikePost: PropTypes.func,
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired

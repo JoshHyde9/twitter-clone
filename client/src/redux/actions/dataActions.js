@@ -118,6 +118,19 @@ export const createComment = (postId, commentData) => dispatch => {
     });
 };
 
+export const getUserData = userHandle => dispatch => {
+  dispatch({ type: LOADING_DATA });
+
+  axios
+    .get(`/user/${userHandle}`)
+    .then(res => {
+      dispatch({ type: SET_POSTS, payload: res.data.posts });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
 export const clearErrors = () => dispatch => {
   dispatch({ type: CLEAR_ERRORS });
 };
