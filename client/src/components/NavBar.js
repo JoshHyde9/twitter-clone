@@ -7,6 +7,7 @@ import ToolTipButton from "../util/ToolTipButton";
 
 // Components
 import CreatePost from "./CreatePost";
+import Notifications from "./Notifications";
 
 // Redux
 import { connect } from "react-redux";
@@ -17,7 +18,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 // Material-UI Icons
 import HomeIcon from "@material-ui/icons/Home";
-import Notifications from "@material-ui/icons/Notifications";
 
 export class NavBar extends Component {
   render() {
@@ -33,9 +33,7 @@ export class NavBar extends Component {
                   <HomeIcon color="primary" />
                 </ToolTipButton>
               </Link>
-              <ToolTipButton tip="Notifications">
-                <Notifications color="primary" />
-              </ToolTipButton>
+              <Notifications color="primary" />
             </>
           ) : (
             <>
