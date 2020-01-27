@@ -20,11 +20,20 @@ const styles = theme => ({
 
 export class User extends Component {
   state = {
-    profile: null
+    profile: null,
+    postIdParam: null
   };
 
   componentDidMount() {
     const userHandle = this.props.match.params.userHandle;
+    const postId = this.props.match.params.postId;
+
+    if (postId) {
+      this.setState({
+        postIdParam: postId
+      });
+    }
+
     this.props.getUserData(userHandle);
 
     axios
@@ -41,13 +50,22 @@ export class User extends Component {
 
   render() {
     const { posts, loading } = this.props.data;
+    const { postIdParam } = this.state;
 
     const postsMarkup = loading ? (
       <p>Loading...</p>
     ) : posts === null ? (
       <p>THERE'S NO GOD DAMN POSTS</p>
-    ) : (
+    ) : !postIdParam ? (
       posts.map(post => <Post key={post.postId} post={post} />)
+    ) : (
+      posts.map(post => {
+        if (post.postId !== postIdParam) {
+          return <Post key={post.postId} post={post} />;
+        } else {
+          return <Post key={post.postId} post={post} openDialog />;
+        }
+      })
     );
 
     return (

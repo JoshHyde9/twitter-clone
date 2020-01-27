@@ -67,6 +67,12 @@ export class PostDialog extends Component {
     open: false
   };
 
+  componentDidMount() {
+    if (this.props.openDialog) {
+      this.handleOpen();
+    }
+  }
+
   handleOpen = () => {
     this.setState({
       open: true
@@ -80,6 +86,7 @@ export class PostDialog extends Component {
     });
     this.props.clearErrors();
   };
+
   render() {
     const {
       classes,
