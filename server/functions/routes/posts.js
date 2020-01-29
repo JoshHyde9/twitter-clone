@@ -11,6 +11,7 @@ exports.getAllPosts = (req, res) => {
           postId: doc.id,
           content: doc.data().content,
           userHandle: doc.data().userHandle,
+          userNickname: doc.data().userNickname,
           commentCount: doc.data().commentCount,
           likeCount: doc.data().likeCount,
           userImage: doc.data().userImage,
@@ -30,6 +31,7 @@ exports.createPost = (req, res) => {
   const newPost = {
     content: req.body.content,
     userHandle: req.user.userHandle,
+    userNickname: req.user.userNickname,
     userImage: req.user.imageURL,
     createdAt: new Date().toISOString(),
     likeCount: 0,
@@ -93,6 +95,7 @@ exports.commentOnPost = (req, res) => {
     content: req.body.content,
     postId: req.params.postId,
     userHandle: req.user.userHandle,
+    userNickname: req.user.userNickname,
     userImage: req.user.imageURL,
     createdAt: new Date().toISOString()
   };

@@ -115,7 +115,8 @@ export class PostDialog extends Component {
         commentCount,
         comments,
         userImage,
-        userHandle
+        userHandle,
+        userNickname
       },
       UI: { loading }
     } = this.props;
@@ -137,7 +138,7 @@ export class PostDialog extends Component {
             </Grid>
             <Grid item sm={8}>
               <div className="handles">
-                <Typography variant="h5">Nickname</Typography>
+                <Typography variant="h5">{userNickname}</Typography>
                 <Typography
                   className={classes.handle}
                   variant="subtitle"

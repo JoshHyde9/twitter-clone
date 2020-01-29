@@ -31,7 +31,13 @@ export class Comments extends Component {
     return (
       <Grid container>
         {comments.map((comment, index) => {
-          const { content, userImage, userHandle, createdAt } = comment;
+          const {
+            content,
+            userImage,
+            userHandle,
+            userNickname,
+            createdAt
+          } = comment;
           return (
             <Fragment>
               <Grid item sm={10}>
@@ -45,7 +51,7 @@ export class Comments extends Component {
                   </Grid>
                   <Grid item sm={9}>
                     <div className={classes.commentData}>
-                      <Typography variant="h5">Nickname</Typography>
+                      <Typography variant="h5">{userNickname}</Typography>
                       <Typography
                         className={classes.handle}
                         variant="subtitle"

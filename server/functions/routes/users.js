@@ -16,6 +16,7 @@ exports.signUp = (req, res) => {
   const newUser = {
     email: req.body.email,
     userHandle: req.body.userHandle,
+    userNickname: req.body.userNickname,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword
   };
@@ -52,6 +53,7 @@ exports.signUp = (req, res) => {
       token = idToken; // Set as generated JSON web token
       const userCreds = {
         userHandle: newUser.userHandle,
+        userNickname: newUser.userNickname,
         email: newUser.email,
         createdAt: new Date().toISOString(),
         imageURL: `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${noImg}?alt=media`,
@@ -238,6 +240,7 @@ exports.getUserDetails = (req, res) => {
         userData.posts.push({
           content: doc.data().content,
           userHandle: doc.data().userHandle,
+          userNickname: doc.data().userNickname,
           userImage: doc.data().userImage,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,

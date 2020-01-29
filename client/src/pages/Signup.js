@@ -28,6 +28,7 @@ export class Signup extends Component {
       password: "",
       confirmPassword: "",
       userHandle: "",
+      userNickname: "",
       errors: {}
     };
 
@@ -53,6 +54,7 @@ export class Signup extends Component {
 
     const newUserData = {
       userHandle: this.state.userHandle,
+      userNickname: this.state.userNickname,
       email: this.state.email,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword
@@ -80,11 +82,23 @@ export class Signup extends Component {
               id="userHandle"
               name="userHandle"
               type="text"
-              label="Display name"
+              label="User Handle"
               className={classes.textField}
               helperText={errors.userHandle}
               error={errors.userHandle ? true : false}
               value={this.state.userHandle}
+              onChange={this.handleChange}
+              fullWidth
+            ></TextField>
+            <TextField
+              id="userNickname"
+              name="userNickname"
+              type="text"
+              label="Nickname"
+              className={classes.textField}
+              helperText={errors.userNickname}
+              error={errors.userNickname ? true : false}
+              value={this.state.userNickname}
               onChange={this.handleChange}
               fullWidth
             ></TextField>

@@ -12,7 +12,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import MuiLink from "@material-ui/core/Link";
-import Typeography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
 // Material-UI Icons
 import LocationOn from "@material-ui/icons/LocationOn";
 import InsertLink from "@material-ui/icons/InsertLink";
@@ -61,6 +61,7 @@ export class Profile extends Component {
       user: {
         credentials: {
           userHandle,
+          userNickname,
           imageURL,
           bio,
           website,
@@ -95,6 +96,7 @@ export class Profile extends Component {
             </div>
             <hr />
             <div className="profile-details">
+              <Typography variant="h5">{userNickname}</Typography>
               <MuiLink
                 component={Link}
                 to={`/users/${userHandle}`}
@@ -104,7 +106,7 @@ export class Profile extends Component {
                 @{userHandle}
               </MuiLink>
               <hr />
-              {bio && <Typeography variant="body2">{bio}</Typeography>}
+              {bio && <Typography variant="body2">{bio}</Typography>}
               <hr />
               {location && (
                 <>
@@ -137,9 +139,9 @@ export class Profile extends Component {
         </Paper>
       ) : (
         <Paper className={classes.paper}>
-          <Typeography variant="body2" align="center">
+          <Typography variant="body2" align="center">
             No profile found, please login or create an accont.
-          </Typeography>
+          </Typography>
           <div className={classes.buttons}>
             <Button
               variant="contained"

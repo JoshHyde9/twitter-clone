@@ -54,6 +54,7 @@ export class Post extends Component {
         content,
         userImage,
         userHandle,
+        userNickname,
         createdAt,
         likeCount,
         commentCount,
@@ -76,7 +77,7 @@ export class Post extends Component {
           title="Profile Image"
         />
         <CardContent className={classes.content}>
-          <Typography variant="h5">Nickname</Typography>
+          <Typography variant="h5">{userNickname}</Typography>
           <Typography
             variant="subtitle2"
             className={classes.handle}

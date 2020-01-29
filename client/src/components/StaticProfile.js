@@ -50,7 +50,15 @@ const styles = theme => ({
 const StaticProfile = props => {
   const {
     classes,
-    profile: { userHandle, imageURL, bio, website, location, createdAt }
+    profile: {
+      userHandle,
+      userNickname,
+      imageURL,
+      bio,
+      website,
+      location,
+      createdAt
+    }
   } = props;
   return (
     <Paper className={classes.paper}>
@@ -60,6 +68,7 @@ const StaticProfile = props => {
         </div>
         <hr />
         <div className="profile-details">
+          <Typography variant="h5">{userNickname}</Typography>
           <MuiLink
             component={Link}
             to={`/users/${userHandle}`}

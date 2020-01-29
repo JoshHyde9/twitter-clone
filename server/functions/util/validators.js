@@ -37,6 +37,10 @@ exports.validateSignUpData = data => {
     errors.userHandle = "Must not be empty.";
   }
 
+  if (isEmpty(data.userNickname)) {
+    errors.userNickname = "Must not be empty.";
+  }
+
   return {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false
