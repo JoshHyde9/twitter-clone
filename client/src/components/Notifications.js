@@ -46,7 +46,7 @@ export class Notifications extends Component {
   render() {
     dayjs.extend(relativeTime);
 
-    const { notifications } = this.props.notifications;
+    const { notifications } = this.props;
     const anchorEl = this.state.anchorEl;
 
     let notificationsIcon;
