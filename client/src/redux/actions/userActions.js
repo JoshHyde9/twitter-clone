@@ -10,10 +10,12 @@ import {
 
 import axios from "axios";
 
+const API_URL = "https://asia-east2-twitter-clone-c02fa.cloudfunctions.net/api";
+
 export const loginUser = (userData, history) => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/login", userData)
+    .post(`${API_URL}/login`, userData)
     .then(res => {
       // Add JWT to localStorage and set axios "Authorization" header to contain JWT
       setAuthorisationHeader(res.data.token);
@@ -34,7 +36,7 @@ export const loginUser = (userData, history) => dispatch => {
 export const signUpUser = (newUserData, history) => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/signup", newUserData)
+    .post(`${API_URL}/signup`, newUserData)
     .then(res => {
       setAuthorisationHeader(res.data.token);
 
@@ -61,7 +63,7 @@ export const logOutUser = () => dispatch => {
 export const getUserData = () => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
-    .get("/user")
+    .get(`${API_URL}/user`)
     .then(res => {
       dispatch({
         type: SET_USER,
@@ -76,7 +78,7 @@ export const getUserData = () => dispatch => {
 export const uploadImage = formData => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
-    .post("/user/image", formData)
+    .post(`${API_URL}/user/image`, formData)
     .then(() => {
       dispatch(getUserData());
     })
@@ -88,7 +90,7 @@ export const uploadImage = formData => dispatch => {
 export const editUserDetails = userDetails => dispatch => {
   dispatch({ type: LOADING_USER });
   axios
-    .post("/user", userDetails)
+    .post(`${API_URL}/user`, userDetails)
     .then(() => {
       dispatch(getUserData());
     })
@@ -99,7 +101,7 @@ export const editUserDetails = userDetails => dispatch => {
 
 export const markNotificationsAsRead = notifcationIds => dispatch => {
   axios
-    .post("/notifications", notifcationIds)
+    .post(`${API_URL}/notifications`, notifcationIds)
     .then(res => {
       dispatch({ type: MARK_NOTIFICATIONS_AS_READ });
     })

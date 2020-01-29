@@ -16,6 +16,8 @@ import StaticProfile from "../components/StaticProfile";
 import { connect } from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
 
+const API_URL = "https://asia-east2-twitter-clone-c02fa.cloudfunctions.net/api";
+
 const styles = theme => ({
   ...theme.spreadThis
 });
@@ -39,7 +41,7 @@ export class User extends Component {
     this.props.getUserData(userHandle);
 
     axios
-      .get(`/user/${userHandle}`)
+      .get(`${API_URL}/user/${userHandle}`)
       .then(res => {
         this.setState({
           profile: res.data.user

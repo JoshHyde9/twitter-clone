@@ -14,11 +14,13 @@ import {
 } from "../types";
 import axios from "axios";
 
+const API_URL = "https://asia-east2-twitter-clone-c02fa.cloudfunctions.net/api";
+
 export const getPosts = () => dispatch => {
   dispatch({ type: LOADING_DATA });
 
   axios
-    .get("/posts")
+    .get(`${API_URL}/posts`)
     .then(res => {
       dispatch({
         type: SET_POSTS,
@@ -37,7 +39,7 @@ export const getPost = postId => dispatch => {
   dispatch({ type: LOADING_UI });
 
   axios
-    .get(`/post/${postId}`)
+    .get(`${API_URL}/post/${postId}`)
     .then(res => {
       dispatch({ type: SET_POST, payload: res.data });
       dispatch({ type: STOP_LOADING_UI });
@@ -51,7 +53,7 @@ export const createPost = newPost => dispatch => {
   dispatch({ type: LOADING_UI });
 
   axios
-    .post("/post", newPost)
+    .post(`${API_URL}/post`, newPost)
     .then(res => {
       dispatch({
         type: CREATE_POST,
@@ -69,7 +71,7 @@ export const createPost = newPost => dispatch => {
 
 export const likePost = postId => dispatch => {
   axios
-    .get(`/post/${postId}/like`)
+    .get(`${API_URL}/post/${postId}/like`)
     .then(res => {
       dispatch({
         type: LIKE_POST,
@@ -83,7 +85,7 @@ export const likePost = postId => dispatch => {
 
 export const unLikePost = postId => dispatch => {
   axios
-    .get(`/post/${postId}/unlike`)
+    .get(`${API_URL}/post/${postId}/unlike`)
     .then(res => {
       dispatch({
         type: UNLIKE_POST,
@@ -97,7 +99,7 @@ export const unLikePost = postId => dispatch => {
 
 export const deletePost = postId => dispatch => {
   axios
-    .delete(`/post/${postId}`)
+    .delete(`${API_URL}/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
     })
@@ -108,7 +110,7 @@ export const deletePost = postId => dispatch => {
 
 export const createComment = (postId, commentData) => dispatch => {
   axios
-    .post(`/post/${postId}/comment`, commentData)
+    .post(`${API_URL}/post/${postId}/comment`, commentData)
     .then(res => {
       dispatch({ type: CREATE_COMMENT, payload: res.data });
       dispatch(clearErrors());
@@ -122,7 +124,7 @@ export const getUserData = userHandle => dispatch => {
   dispatch({ type: LOADING_DATA });
 
   axios
-    .get(`/user/${userHandle}`)
+    .get(`${API_URL}/user/${userHandle}`)
     .then(res => {
       dispatch({ type: SET_POSTS, payload: res.data.posts });
     })
