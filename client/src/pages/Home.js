@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 // Components
 import Post from "../components/Post";
+import PostSkeleton from "../util/PostSkeleton";
 import Profile from "../components/Profile";
 
 // Redux
@@ -22,7 +23,7 @@ export class Home extends Component {
     let postsMarkup = !loading ? (
       posts.map((post, key) => <Post key={key} post={post} />)
     ) : (
-      <p>Loading...</p>
+      <PostSkeleton />
     );
     return (
       <Grid container spacing={6}>
@@ -30,7 +31,7 @@ export class Home extends Component {
           <Profile />
         </Grid>
         <Grid item sm={8} xs={12}>
-          {posts.length === 0 ? <p>THERE'S NO GOD DAMN POSTS</p> : postsMarkup}
+          {postsMarkup}
         </Grid>
       </Grid>
     );

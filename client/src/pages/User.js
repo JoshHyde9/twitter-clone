@@ -8,6 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // Comonents
 import Post from "../components/Post";
+import PostSkeleton from "../util/PostSkeleton";
 import StaticProfile from "../components/StaticProfile";
 
 // Redux
@@ -56,7 +57,7 @@ export class User extends Component {
     const { postIdParam } = this.state;
 
     const postsMarkup = loading ? (
-      <p>Loading...</p>
+      <PostSkeleton />
     ) : posts === null ? (
       <p>THERE'S NO GOD DAMN POSTS</p>
     ) : !postIdParam ? (
