@@ -70,7 +70,7 @@ export class Notifications extends Component {
     let notificationsMarkup =
       notifications && notifications.length > 0 ? (
         notifications.map(not => {
-          const verb = not.type === "like" ? "Liked" : "Commented on";
+          const verb = not.type === "like" ? "liked" : "commented on";
           const time = dayjs(not.createdAt).fromNow();
           const iconColour = not.read ? "primary" : "secondary";
           const icon =
@@ -85,7 +85,8 @@ export class Notifications extends Component {
               {icon}
               <Typography
                 component={Link}
-                color="default"
+                style={{ textDecoration: "none" }}
+                color="textPrimary"
                 variant="body1"
                 to={`/users/${not.recipient}/post/${not.postId}`}
               >
@@ -95,7 +96,7 @@ export class Notifications extends Component {
           );
         })
       ) : (
-        <MenuItem onClick={this.handleClose}>You're all caught up!</MenuItem>
+        <MenuItem onClick={this.handleClose}>No notifications found.</MenuItem>
       );
 
     return (
