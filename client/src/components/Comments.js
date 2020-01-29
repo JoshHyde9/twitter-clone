@@ -19,6 +19,9 @@ const styles = theme => ({
     height: "80px",
     ObjectFit: "cover",
     borderRadius: "50%"
+  },
+  commentData: {
+    paddingBottom: 10
   }
 });
 

@@ -9,6 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // Comonents
 import Post from "../components/Post";
 import PostSkeleton from "../util/PostSkeleton";
+import ProfileSkeleton from "../util/ProfileSkeleton";
 import StaticProfile from "../components/StaticProfile";
 
 // Redux
@@ -76,7 +77,7 @@ export class User extends Component {
       <Grid container spacing={6}>
         <Grid item sm={4} xs={12}>
           {this.state.profile === null ? (
-            <p>Loading....</p>
+            <ProfileSkeleton />
           ) : (
             <StaticProfile profile={this.state.profile} />
           )}

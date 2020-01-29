@@ -77,6 +77,47 @@ export default {
       height: "1px",
       background: "#095484",
       backgroundImage: "linear-gradient(to right, #192735, #01a0b5, #192735)"
+    },
+    paper: {
+      padding: 20,
+      backgroundColor: "#192735",
+      color: "#ddd"
+    },
+    profile: {
+      "& .image-wrapper": {
+        textAlign: "center",
+        position: "relative",
+        "& button": {
+          position: "absolute",
+          top: "80%",
+          left: "70%"
+        }
+      },
+      "& .profile-image": {
+        width: 200,
+        height: 200,
+        objectFit: "cover",
+        maxWidth: "100%",
+        borderRadius: "50%"
+      },
+      "& .profile-details": {
+        textAlign: "center",
+        "& span, svg": {
+          verticalAlign: "middle"
+        },
+        "& a": {
+          color: "#01a0b5"
+        }
+      },
+      "& hr": {
+        border: "none",
+        margin: "0 0 10px 0"
+      },
+      "& svg.button": {
+        "&:hover": {
+          cursor: "pointer"
+        }
+      }
     }
   }
 };

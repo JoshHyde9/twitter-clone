@@ -68,8 +68,10 @@ export class DeletePost extends Component {
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Are you sure you want to delete this twat?</DialogTitle>
-          <DialogActions>
+          <DialogTitle style={{ backgroundColor: "#192735", color: "#ddd" }}>
+            Are you sure you want to delete this twat?
+          </DialogTitle>
+          <DialogActions style={{ backgroundColor: "#192735" }}>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
